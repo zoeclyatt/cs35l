@@ -1,0 +1,8 @@
+HOMEWORK 4
+
+Q3. When this script is invoked on an empty file with python, there is no way in the randline.py file to handle an error like this with python2, so you get an Index Error from python2.7 instead of the randline.py file.
+
+Q4. When this script is invoked on an empty file with python3, you would get the error "I/O error" because even though the file has a valid number of lines, the program would fail to generate a random line because there are no lines to generate a random line from and it has a way to handle this error.
+
+
+Q5. 

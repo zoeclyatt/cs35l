@@ -1,0 +1,22 @@
+1. man -k word (i used man man)
+2. /usr/bin/mv and /usr/bin/sh (i used man to look up which, then used which to find where they were located)
+3. pr, ar, tr; find /usr/bin/ -name "?r" -printf "%p\t%M\n" (used lab slides for find /usr/bin/ -name "?r"; searched for type in find's man page, found out i could use printf, searched through directives   to find ones that printed the file names and permission bits(if users are allowed to execute the file, then it must be executable) and used escapes to make it look pretty in my shell)
+4. /usr/bin/emacs-24.3 (i used ls -l until i got to the file)
+5. /usr/bin/gcc version: 4.8.5; plain gcc version: 9.3.0; they are different programs because the path for the plain gcc is /usr/local/cs/bin/gcc? (i used which gcc and which /usr/bin/gcc)
+6. sets it to always execute with owner permissions, gives owner permission to execute, and removes write permission from others?
+7. shell command: find /usr/local/cs -mtime -28 -type d |wc -l
+   446 entries, first 5 were:
+   /usr/local/cs
+   /usr/local/cs/src/git
+   /usr/local/cs/src/git/RCS
+   /usr/local/cs/src/coreutils
+   /usr/local/cs/src/coreutils/RCS
+   (i used man find /type to learn how to search for directories; man find /modified to learn how to add date modified to search; i didn't use maxdepth because the instructions said ALL the directories;    i searched for "count" using man -k and saw the wc command, which i used with the line option to count the number of lines of output; i learned how to redirect output from a command in cs 31)
+8. 254 are symbolic links; shell command: find /usr/bin -type l |wc -l (searched for type in the man find page)
+9. librom1394.so.0.3.0; shell command: ls /usr/lib64 -alt (used -l to be able to look at the permission bits for each file to check the file type, -a to include hidden files, and -t to sort by time)
+10. /usr/lib/locale/locale-archive; shell command: man locale (i found the answer under the FILES section on the man page)
+11. downcase-dwim (M-x), downcase-region  (C-x C-l), downcase-word (M-l); emacs command: C-h a downcase
+12. C-M-r: search backward; C-M-v: end of buffer? (i tried these commands in my emacs while working on a separate file)
+13. C-g is a keyboard quit, it signals a 'quit' condition (i tried the command on a separate file in emacs, saw that it said "quit" so i used 'C-h a quit' to find a description of the command)
+14. it pastes the last stretch of killed text, it can be invoked using C-v (i used C-h a yank to find this information)
+15. using the emacs dired command lists the current and parent directories as well as the ones that are also listed by ls -l; shell commands: ls -l; emacs commands: C-h a to learn how to use direc comman    d and C-x d /usr/bin to use the command

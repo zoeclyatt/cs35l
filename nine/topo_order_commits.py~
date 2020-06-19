@@ -1,0 +1,39 @@
+import os
+import sys
+import zlib
+
+#discover the .git directory
+def get_git():
+    found = False
+    git_dir = ''
+    while found == False:
+        for file in os.listdir():
+            if file == '.git':
+                found = True
+                git_dir = os.getcwd()
+        if os.getcwd() == '/':
+            break
+        os.chdir('..')
+    if found == False:
+        sys.stderr.write("Not inside a Git repository")
+        exit(1)
+    else:
+        return git_dir
+
+def get_branches(git_path):
+    os.chdir(git_path)
+    os.chdir('.git/refs/heads')
+    return os.listdir()
+
+class CommitNode:
+    def __init__(self, commit_hash):
+        """
+        :type commit_hash: str
+        """
+        self.commit_hash = commit_hash
+        self.parents = set()
+        self.children = set()
+
+def assign_nodes():
+    
+print(get_branches(get_git()))

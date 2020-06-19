@@ -1,0 +1,18 @@
+HOMEWORK LOG:
+
+2. checked out version 3.0 using command git checkout v3.0 then created branch using command git branch quote
+
+3. applied patch using command patch -p1 < ../quote-3.0-patch.txt
+patching file src/analyze.c
+patching file src/cmp.c
+patching file src/context.c
+patching file src/diff.c
+patching file src/diff3.c
+patching file src/dir.c
+patching file src/ifdef.c
+patching file src/io.c
+patching file src/sdiff.c
+patching file src/side.c
+patching file src/util.c
+
+5. i don't know what the instructions mean, for some reason when i try to open the ChangeLog file to see what my file should look like/what i'm supposed to do it shows up as an empty file :( 

@@ -1,0 +1,15 @@
+LAB LOG:
+
+1. logged into lnxsrv09@seas.ucla.edu with X11 forwarding; had to create a .ssh directory using mkdir
+
+2. generated ssh key with ssh-keygen, which generated the keys id_rsa (only owner has permissions, so it is the private one)  and id_rsa.pub (everyone has read permissions, so it is the public one)
+
+3. the file ~/.ssh/authorized_keys did not exist on lnxsrv10 but it was created when i shared my key with the server using ssh-copy-id
+
+4. when i tried to log into lnxsrv10 again i was prompted for my passphrase
+
+5. after running eval `ssh-agent` and ssh-add i was no longer prompted for a password when trying to log in
+
+6. when logging in with -X i was able to see eyes pop up on my screen after running xeyes
+
+7. i was able to log in from lnxsrv09 to lnxsrv10 and from lnxsrv10 to lnxsrv07 and run xeyes from there using ssh -XA ...

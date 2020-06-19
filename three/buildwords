@@ -1,0 +1,3 @@
+#!/usr/bin/bash
+
+sed -E "s/\?|<u>|<\/u>//g" | tr "[A-Z]\`-" "[a-z]' " | grep -E "^[ ]*<td[^>]*>[pk'mnwlhaeiou]+</td>[ ]*" | sed -E "s/[ ]*<td[^>]*>|<\/td>[ ]*//g" | tr -s " " "\n" | sort -u

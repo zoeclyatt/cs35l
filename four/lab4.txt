@@ -1,0 +1,9 @@
+LAB 4 LOG
+
+1. I grabbed the source code tarball, signature, GNU keyring, and patch using wget. When verifying the signature, I got messages saying that the signature was good, but it was not trusted and there was no indication that it belongs to the owner. This is probably because I have not manually confirmed that the signature that I'm verifying actually belongs to who it says it belongs to since I do not know this person.
+
+2. The command "./configure --prefix="/u/eng/class/classzcl/cs35l/four/coreutils-with-bug"" ran smoothly. The "make" and "make install" commands gave me errors because there were conflicting types for 'futimens'. To apply the renaming patch, I first used the command "grep -E '^\-\-\- |^\+\+\+ ' coreutils.diff" to see exactly which files were to be modified. Then, I switched to the coreutiles-with-bug directory and ran the patch command "patch -p0 < coreutils.diff". After doing this, i was able to successfully build coreutils.
+
+3. I was able to successfully reproducce the bug by going into the "src" directory and running "./ls -aA". 
+
+4. I was unable to apply the patch, when running the patch command "patch -p1 < bug.diff" from the "coreutils-with-bug-directory", it was unable to  find the file to patch.

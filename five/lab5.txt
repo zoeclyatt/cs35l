@@ -1,0 +1,68 @@
+LAB 5 LOG
+
+-used wget https://web.cs.ucla.edu/classes/spring20/cs35L/assign/coreutils-with-bug.tar.gz to download file
+
+-changed into the coreutils-with-bug directory and used pwd to find the path to my file
+
+-used ./confure --prefix="/u/eng/class/classzcl/cs35l/five/coreutils-with-bug" then make (for which i got an error saying that the function futimens had conflicting types) and make install (for which i got the same error)
+
+-got the renaming patch using wget https://web.cs.ucla.edu/classes/spring20/cs35L/assign/coreutils.diff
+
+-used cat coreutils.diff to see what directory the patch file needed to be in
+
+-patched files using patch -p0 < coreutils.diff, after which make and make install were both successful
+
+-used find -name 'ls' to find the file (which was in coreutils/bin) and changed into that directory
+
+-was able to reproduce the bug with the following commands
+     tmp=$(mktemp -d)
+     cd $tmp
+     touch -d '1918-11-11 11:00 GMT' wwi-armistice-cs35L
+     touch now
+     sleep 1
+     touch now1
+     TZ=UTC0 ~/cs35l/five/coreutils-with-bug/bin/ls -lt --full-time wwi-armistice-cs35L now now1
+
+-to look at the source code, i first entered the coreutils-with-bug/bin directory, but then i realized that in order to get the C source code i should be using the ls in coreutils-with-bug/src
+
+-i opened the source code in emacs and used the C-s command to search through the file for all instances of the string "time". first, i reached a part where a comment said that the time is calculated in how much time has elapsed since january 1st 1970, which made me think that this may be some sort of overflow since 1918 would be a negative value. eventually, i ended up at a case "sort_time" in a switch statement in the sort-files function with cases for time-types ctime, mtime, and atime, which uses compare_xtime or rev_cmp_xtime for each of those options. I searched for time_type and found that mtime was the default, so i decided to search for the compare_mtime and rev_cmp_mtime functions, finding that rev_cmp_mtime relied on compare_mtime and compare_mtime relies on cmp_mtime, so i decided to se my breakpoints in gdb at cmp_mtime, compare_mtime, and rev_cmp_mtime.
+
+--to run gdb
+    gdb ls
+    b cmp_mtime
+    b compare_mtime
+    b rev_cmp_mtime
+    r
+
+-after running through gdb like this, i realized that i should have used the -lt options or else i wouldn't be able to have them sorted by time
+       gdb ls
+       b cmp_mtime
+       b compare_mtime
+       b rev_cmp_mtime
+       r -lt
+
+-but after running it like this, i realized that none of the files in my directory had really old dates, so i exited gdb and remade the wwi-armistice fils in the directory in order to use it as an argument for ls in gdb, but after trying to run it again, there were too many files to be sorted and i couldn't keep track of all of them so i went to ls' man page to check if i could only ask to list specific files, and i could, so i decided to remake the now and now1 files and run gdb using the three files as arguments
+     gdb ls
+     b cmp_mtime
+     b compare_mtime
+     b rev_cmp_mtime
+     r -lt wwi-armistice now now1
+
+     -i used info local to get the local variables, and after stepping through the function, i ended up at this function timespec_cmp on line 48 of ../lib/timespec.h which did subtraction on two time variables, which i'm guessing is where the overflow is coming from. when stepping through this function and constantly checking the variables, i found that the diff variable in the timespec_cmp function was 6, which happened to be the difference between my now and now1 files. after stepping through some more, diff was now equal to -1092144400, which looks like the overflow i was thinking it was.
+
+-i created a copy of the file in my current directory using cp ../lib/timespec.h timespec2.h
+
+-used emacs to open timespec2.h, and i wasn't sure how to handle the cases so i just did
+      static inline int
+      timespec_cmp (struct timespec a, struct timespec b)
+      {
+	int diff = 0;
+  	if(a.tv_sec > b.tv_sec) diff = 1;
+  	else if(b.tv_sec > a.tv_sec) diff = -1;
+  	else diff = a.tv_nsec - b.tv_nsec;
+  	return diff;
+      }
+
+-created patch file using diff ../lib/timespec.h timespec2.h > lab5.diff, and applied it using patch ../lib/timespec.h < lab5.diff
+
+-after doing this and running ls -lt, it said that wwi-armistice was last modifiec on Dec 17  2054 and i didn't know what to do :(

@@ -1,0 +1,21 @@
+HOMEWORK LOG:
+
+generating key pair:
+	   gpg --gen-key enter
+	   1 enter
+	   2048 enter
+	   0 enter
+	   y enter
+	   zoeclyatt enter
+	   zoeclyatt@g.ucla.edu enter
+	   *i tried this twice and kept getting "problem with the agent: No pinentry" before it would cancel the key generation, but someone on the internet had the same problem and apparently it was because I had X11 forwarding enabled so i needed to use unset DISPLAY, and after that I was able to successfully generate a key after entering my passphrase)
+
+exporting public key:
+	  gpg --export -a zoeclyatt > hw-pubkey.asc
+
+creating detached signature:
+	 gpg --output hw-pubkey.sig --sign hw-pubkey.asc
+
+questions:
+	1. if other people had been observing all the bytes going across the network in my lab exercise, the network would still be secure because the data would be encrypted because i used my ssh key, which would be the same if they had tapped my keyboard. if i was booting off a usb and someone else temporarily had physical control of that usb, then they could harvest my private key and keystrokes (which would give them access to my passphrase)
+	2. the gpg --verify command doesn't really verify that you personally created the file in question because you could have obtained the file from elsewhere before signing it. i don't think this problem can be fixed because you could only check if the user is the owner of the file, not if they actually created the file. 

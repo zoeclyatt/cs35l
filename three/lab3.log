@@ -1,0 +1,31 @@
+LAB 3 LOG
+
+
+the locale command did not output the right thing, so i fixed that by using the command export LC_ALL='C' and then used locale again to check it
+
+i used sort /usr/share/dict/words > words to create the file words in my working directory
+
+then i used wget https://web.cs.ucla.edu/classes/spring20/cs35L/assign/assign3.html and copied the contents of the assignment web page into a file called assign3.txt by using mv assign3.html assign3.txt
+
+tr -c 'A-Za-z' '[\n*]' < assign3.txt
+       outputs the contents of the file and replaces all the non-alphabetical characters with a newline
+      
+tr -cs 'A-Za-z' '[\n*]' < assign3.txt
+       outputs the version of the previous command that squeezes all the consecutive occurences of newlines into one occurence
+      
+tr -cs 'A-Za-z' '[\n*]' < assign3.txt | sort
+       outputs the sorted version of the previous command
+       
+tr -cs 'A-Za-z' '[\n*]' < assign3.txt | sort -u
+       outputs the version of the previous command without duplicates
+       
+tr -cs 'A-Za-z' '[\n*]' < assign3.txt | sort -u | comm - words
+       outputs 3 sorted columns, the first one with words unique to assign3.txt, the second one with words unique to the file words, and the third with words they share in common
+       
+tr -cs 'A-Za-z' '[\n*]' < assign3.txt | sort -u | comm -23 - words # ENGLISHCHECKER
+       outputs the words that are not correct english words from the first column of the previous command
+
+
+i used wget https://www.mauimapp.com/moolelo/hwnwdshw.htm to get my own copy of the page
+
+

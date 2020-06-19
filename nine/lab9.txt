@@ -1,0 +1,45 @@
+LAB 9 LOG:
+
+1. used man -k disk usage to find the du command. the directory is using 590312 bytes. the git repo is using 424356 bytes. the ./.git/objects/pack and ./.git/objects/info files consume most of the repo space because that is where all the objects and their onfo are stored.
+
+2. using the command git branch | wc -l i found that there were 176 local branches and using git branch -r | wc -l i found that there were 177 remote branches
+
+3. using git remote -v, i found that there were 2 remote repos, origin (found in /u/cs/fac/eggert/src/gnu/emacs) and savannah (found at https://git.savannah.gnu.org/git/emacs.git)
+
+4. used command git branch --sort=-committerdate (- to get the date in descending order). the 10 most recent committs are:
+* master
+  scratch/joaot/make-completion-at-point-function
+  feature/windows-with-utils
+  scratch/completion-api
+  scratch/a-modest-completion-redesign-proposal
+  scratch/fido-mode
+  feature/gnus-select2
+  feature/extend_face_id
+  scratch/jit-lock-antiblink-cleaned-up
+  emacs-26
+
+5. from the master branch, i used the command git log | grep -E '^commit ' | wc -l to count the commits (there were 141268)
+
+6. 97% of commits in any branch are also in the master branch. used command git log --oneline | wc -l to get number of commits in master branch, git log --oneline | wc -l to get number of commits from all branches, then i did simple division (141268/145595 = 0.97)
+
+7. used command git log --since=2013 | grep -E "^Author: " | sort | uniq -c | sort -gr | head -n 10. (leading number is commit count)
+   3702 Author: Eli Zaretskii <eliz@gnu.org>
+   3549 Author: Paul Eggert <eggert@cs.ucla.edu>
+   3351 Author: Glenn Morris <rgm@gnu.org>
+   1833 Author: Lars Ingebrigtsen <larsi@gnus.org>
+   1716 Author: Stefan Monnier <monnier@iro.umontreal.ca>
+   1581 Author: Michael Albinus <michael.albinus@gmx.de>
+    647 Author: Dmitry Gutov <dgutov@yandex.ru>
+    596 Author: Noam Postavsky <npostavs@gmail.com>
+    489 Author: Alan Mackenzie <acm@muc.de>
+    442 Author: Juri Linkov <juri@linkov.net>
+
+8.
+   977cd6-.......-0c06b9-.........-abcb2e-...-98ac36
+   /               /                /         /
+4ea376           ...-820739        /         /
+   \            /       \         /         /
+   625cee-...-5490cc    00e4e3   /         /
+                           \...-49cd56-.../
+
+
